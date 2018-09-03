@@ -146,7 +146,8 @@ def last_function():
     for url_list in loop_url(url):
         game_data = check_game_data(takeGameDatas(url_list).items())
         for i, v in game_data:
-            print('発売予定日は{}\n'.format(i))
+            print('\n')
+            print('発売予定日は{}'.format(i))
             for d, k in v.items():
                 main_prints(k['name'], k['device'], k['price'])
 
