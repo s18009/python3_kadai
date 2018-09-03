@@ -32,17 +32,16 @@ def user_select_device(devices):
 
 def selection_device(devices_list, select_device):
     select = devices_list[select_device]
-    print(select)
     return select
 
 
-def loop_url(url):
+def loop_url(user_select, url):
     # ユーザが選択したデバイスの全urlを取得する関数
     url_list = [url]
     master_url = 'https://www.famitsu.com'
     count = 0
     while count < 1:
-        print('現在{}ページ目のURLを取得しています。'.format(len(url_list)))
+        print('現在{}の{}ページ目のURLを取得しています。'.format(user_select, len(url_list)))
         url_res = requests.get("".join(url_list[-1]))
         url_content = url_res.content
         url_soup = BeautifulSoup(url_content, 'html.parser')
@@ -100,7 +99,9 @@ def check_game_data(game_datas):
     game_data = len(game_datas)
     if game_data == 0:
         sleep(0.5)
-        print('ゲームデータが存在しません。')
+        print('\n')
+        print('ゲームデータが存在しません。\n')
+        sleep(1)
         print('他のデバイスを選択してください。')
     return game_datas
 
@@ -143,7 +144,7 @@ def last_function():
     device_list = device_decision()
     user_select = user_select_device(device_list)
     url = selection_device(device_list, user_select)
-    for url_list in loop_url(url):
+    for url_list in loop_url(user_select, url):
         game_data = check_game_data(takeGameDatas(url_list).items())
         for i, v in game_data:
             print('\n')
